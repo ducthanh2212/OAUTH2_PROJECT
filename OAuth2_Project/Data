@@ -1,0 +1,1 @@
+INSERT INTO users (id, enabled, password, role, username) VALUE (1, 1,'$2a$10$iS86FsFIDfRjb5uxdRkAduFCk/XoGR5L7YED5FHCgcNOZ5iL4zd1O', 'ADMIN', 'vy')
