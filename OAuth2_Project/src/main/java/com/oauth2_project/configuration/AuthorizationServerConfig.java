@@ -37,6 +37,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private CustomTokenEnhancer customTokenEnhancer;
+	
 	@Override
 	public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
@@ -56,7 +59,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
     	endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).accessTokenConverter(defaultAccessTokenConverter())
-    	.userDetailsService(userDetailsService);
+    	.userDetailsService(userDetailsService).tokenEnhancer(customTokenEnhancer);
+//    	endpoints.tokenEnhancer(new CustomTokenEnhancer());
+    	
     }
 
 	@Bean
@@ -68,6 +73,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public JwtAccessTokenConverter defaultAccessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		converter.setSigningKey(jwtsecretkey);
+		System.err.println();
+		System.err.println("converter: "+ converter.getAccessTokenConverter());
 		return converter;
 	}
 }
