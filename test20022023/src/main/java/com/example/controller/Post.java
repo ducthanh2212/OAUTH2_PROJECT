@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.FeedService.PostService;
 import com.example.utils.BaseRestService;
 import com.example.utils.ErrorCodeUtils;
+import com.oauth2_project.repository.TokenDao;
 
 
 @RestController
@@ -27,6 +28,9 @@ public class Post extends BaseRestService{
 
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private TokenDao tokenDao;
 	
 	@GetMapping("/getPost")
 	public ResponseEntity<?> getPost(@RequestHeader HttpHeaders requestHeader){
@@ -40,10 +44,13 @@ public class Post extends BaseRestService{
 	@PostMapping("/createpost")
 	public ResponseEntity<?> savePost(@RequestHeader HttpHeaders requestHeader, @RequestBody Map<String,Object>post){
 		String id = postService.savePost(post);
+		
 		if(ObjectUtils.isEmpty(id)) {
 			return super.error(ErrorCodeUtils.NO_CONTENT.getCode(), ErrorCodeUtils.NO_CONTENT.getReason());
 		}
 		post.put("id", id);
+		Document doc = new Document(post);
+		tokenDao.save(doc);
 		return super.success(post);	}
 	
 }
