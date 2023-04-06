@@ -17,7 +17,7 @@ public class UserDao {
 	}
 	
 	public Document getUser(String idUser) {
-		Document filter = new Document ("_id", new ObjectId(idUser));
+		Document filter = new Document ("username", idUser);
 		return this.getCollection().find(filter).first();
 	}
 	

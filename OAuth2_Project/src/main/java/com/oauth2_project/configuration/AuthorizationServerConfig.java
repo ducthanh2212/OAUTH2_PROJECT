@@ -63,7 +63,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //		endpoints.tokenEnhancer(customTokenEnhancer);
 		endpoints.tokenStore(new CustomTokenStore(mongoTemplate, "token",jwtsecretkey)).authenticationManager(authenticationManager)
 				.accessTokenConverter(defaultAccessTokenConverter()).userDetailsService(userDetailsService);
-    	
+//		endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager)
+//		.accessTokenConverter(defaultAccessTokenConverter()).userDetailsService(userDetailsService);
+
 
 	}
 

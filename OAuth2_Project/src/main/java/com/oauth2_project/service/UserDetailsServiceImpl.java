@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			GrantedAuthority authority = new SimpleGrantedAuthority(user.getString("role"));
 			grantList.add(authority);
 	        if(!ObjectUtils.isEmpty(user)) {
-	        	UserDetails userdetial = new User(user.get("_id").toString(), user.getString("password"), grantList);
+	        	UserDetails userdetial = new User(user.get("username").toString(), user.getString("password"), grantList);
 	        	return userdetial;
 	        }
 	        throw new UsernameNotFoundException("LOI");
